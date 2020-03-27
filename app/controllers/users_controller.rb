@@ -12,13 +12,14 @@ def index
   end
  
   def edit
+    
     @user = User.find(params[:id])
   end
  
   def create
     @user = User.new(user_params)
-    #@user.password=params[:user][:password]
     if @user.save
+      flash[:notice]="The user was sucessfully created"
       redirect_to @user
     else
       render 'new'
@@ -29,6 +30,7 @@ def index
     @user = User.find(params[:id])
  
     if @user.update(user_params)
+      flash[:notice]="The user was sucessfully updated"
       redirect_to @user
     else
       render 'edit'
