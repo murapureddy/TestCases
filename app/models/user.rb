@@ -1,20 +1,15 @@
-class User < ApplicationRecord
-  require 'bcrypt'
-  
-  include BCrypt
-
+class User < ApplicationRecord  
+  has_many :posts
+  #include BCrypt
   #def password
-  #	debugger
    # @password ||= Password.new(password_hash)
   #end
 
   #def password=(new_password)
-  	#debugger
-    #@password = Password.create(new_password)
-   # self.password= @password
+   # @password = Password.create(new_password)
+   # self.password_hash = @password
   #end
-
-  before_save :encrypt_password
+  #before_save :encrypt_password
  #def self.authenticate(name, password)
   #user = find_by_user_name(name)
   #if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
@@ -24,12 +19,12 @@ class User < ApplicationRecord
  # end
 #end
 
-def encrypt_password
-  if self.password.present?
-    self.password = BCrypt::Engine.generate_salt
-    self.password = BCrypt::Engine.hash_secret(password, password)
-  end
-end 
+#def encrypt_password
+ # if self.password.present?
+  #  self.password = BCrypt::Engine.generate_salt
+   # self.password = BCrypt::Engine.hash_secret(password, password)
+  #end
+#end 
 
 #def self.authenticate(username,password)
  #@user = User.find_by_username(username)
