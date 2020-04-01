@@ -10,7 +10,7 @@ class PostsController < ApplicationController
 
 	def create
 		debugger
-	 @current_user=User.find(params[:post][:user_id])
+	 @current_user=User.find(params[:user_id])
 	 @post =  @current_user.posts.new(post_params)
 	 if @post.save
       flash[:notice]="The post was sucessfully created"
