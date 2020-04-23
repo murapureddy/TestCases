@@ -6,7 +6,7 @@ RSpec.describe UsersController, type: :controller do
 		return {
 			first_name: "lll",
 			email: "ll@gmail.com",
-			password: "12345"
+			password: "123456789"
 		}
 	end
 
@@ -21,6 +21,30 @@ let!(:user){FactoryBot.create :user}
  before { post(:create, params: { user: valid_params }) }
  it 'create a new user' do
   expect(flash[:notice]).to eq 'The user was sucessfully created'
+ end
+end
+
+context 'GET #index' do
+let!(:user){FactoryBot.create :user}
+ before { get(:index) }
+ it 'list of all users' do
+  expect(subject).to render_template("index")
+ end
+end
+
+context 'GET #index' do
+let!(:user){FactoryBot.create :user }
+ before { get(:index,params: {search:  user.first_name})}
+ it 'search based on first_name' do
+  expect(subject).to render_template("index")
+ end
+end
+
+context 'GET #index' do
+let!(:user){FactoryBot.create :user }
+ before { get(:index,params: {search:  user.email})}
+ it 'search based on email' do
+  expect(subject).to render_template("index")
  end
 end
 
@@ -45,7 +69,7 @@ context "get sign_in of the user" do
 #before { user_sign_in user }
 before { post(:user_sign_in, params: { email: "ll@gmail.com",password: "12345"} )}
 it "login the user" do
-expect(response.status).to eq (302)
+expect(response.status).to eq (204)
 end
 end
 

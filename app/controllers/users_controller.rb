@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user,only: [:show,:edit,:update,:destroy]
 def index
+  if params[:search].present?
+    @users = User.where("first_name LIKE ? or email Like ?","%#{params[:search]}%","%#{params[:search]}%")
+  else
     @users = User.all
+  end
   end
  
   def show
@@ -21,7 +25,6 @@ def index
   end
 
   def user_sign_in
-    debugger
   if params[:email].present? && params[:password].present?
    @user = User.where(email: params[:email],password: params[:password]).first
    if @user.present?
@@ -40,7 +43,6 @@ def index
   end
  
   def create
-    debugger
     @user = User.new(user_params)
     if @user.save
       session[:user]=@user.id
