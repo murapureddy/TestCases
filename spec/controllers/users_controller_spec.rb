@@ -28,7 +28,7 @@ context 'GET #index' do
 let!(:user){FactoryBot.create :user}
  before { get(:index) }
  it 'list of all users' do
-  expect(subject).to render_template("index")
+  expect(assigns(:users)).to eq([user])
  end
 end
 
@@ -36,7 +36,8 @@ context 'GET #index' do
 let!(:user){FactoryBot.create :user }
  before { get(:index,params: {search:  user.first_name})}
  it 'search based on first_name' do
-  expect(subject).to render_template("index")
+ expect(assigns(:users)).to eq([user])
+  #expect().to render_template("index")
  end
 end
 
@@ -44,7 +45,7 @@ context 'GET #index' do
 let!(:user){FactoryBot.create :user }
  before { get(:index,params: {search:  user.email})}
  it 'search based on email' do
-  expect(subject).to render_template("index")
+  expect(assigns(:users)).to eq([user])
  end
 end
 
